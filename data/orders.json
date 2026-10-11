@@ -1,0 +1,84 @@
+[
+  {
+    "_id": "ORD-1782044547997",
+    "orderId": "ORD-1782044547997",
+    "user": "USR-1781174888340",
+    "customerName": "admin",
+    "customerEmail": "admin@zafir.com",
+    "customerPhone": "01716007265",
+    "deliveryAddress": "Chandrima model town, road no-09,\r\nhouse no-09, block-C, flat-1C",
+    "items": [
+      {
+        "productId": "PROD-17811738256141",
+        "name": "AMD Ryzen 5 5600X Processor",
+        "price": 18500,
+        "quantity": 1,
+        "imagePath": "/images/product-cpu.png",
+        "isPreOrder": false
+      }
+    ],
+    "subtotal": 18500,
+    "deliveryFee": 80,
+    "totalAmount": 18580,
+    "estimatedDelivery": "2026-06-26T12:22:27.997Z",
+    "status": "Cancelled",
+    "statusHistory": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-06-21T12:22:27.998Z",
+        "note": "Order placed via website"
+      },
+      {
+        "status": "Cancelled",
+        "timestamp": "2026-06-21T12:46:09.262Z",
+        "note": "Updated via admin quick-select"
+      }
+    ],
+    "orderOtp": null,
+    "orderOtpExpiry": null,
+    "isOtpVerified": true,
+    "placedAt": "2026-06-21T12:22:27.998Z"
+  },
+  {
+    "_id": "ORD-1782045808913",
+    "orderId": "ORD-1782045808913",
+    "user": "USR-1781174888340",
+    "customerName": "admin",
+    "customerEmail": "admin@zafir.com",
+    "customerPhone": "34",
+    "deliveryAddress": "234234",
+    "items": [
+      {
+        "productId": "PROD-17811738256200",
+        "name": "HyperX Cloud II Gaming Headset",
+        "price": 8500,
+        "quantity": 1,
+        "imagePath": "/images/product-headset.png",
+        "isPreOrder": false
+      }
+    ],
+    "subtotal": 8500,
+    "deliveryFee": 80,
+    "totalAmount": 8580,
+    "estimatedDelivery": "2026-06-26T12:43:28.912Z",
+    "status": "Delivered",
+    "statusHistory": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-06-21T12:43:28.913Z",
+        "note": "Order placed via website"
+      },
+      {
+        "status": "Delivered",
+        "timestamp": "2026-06-21T12:46:04.269Z",
+        "note": "Updated via admin quick-select"
+      }
+    ],
+    "orderOtp": null,
+    "orderOtpExpiry": null,
+    "isOtpVerified": true,
+    "placedAt": "2026-06-21T12:43:28.913Z",
+    "qrCodeData": "data:image/png;base64,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",
+    "qrCodePayload": "{\"orderId\":\"ORD-1782045808913\",\"customerId\":\"USR-1781174888340\",\"customerEmail\":\"admin@zafir.com\",\"totalAmount\":8580,\"deliveredAt\":\"2026-06-21T12:46:04.269Z\",\"items\":[{\"name\":\"HyperX Cloud II Gaming Headset\",\"qty\":1,\"price\":8500}]}"
+  }
+]

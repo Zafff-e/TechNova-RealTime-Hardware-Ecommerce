@@ -1,0 +1,41 @@
+<%- include('partials/header', { pageTitle: 'Verify Email' }) %>
+
+<div class="form-page">
+  <div class="form-card">
+    <div class="form-header">
+      <div class="form-icon">📧</div>
+      <h2>Verify Your Email</h2>
+      <p>Enter the 6-digit code we sent to your email address.</p>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert-error"><%= error %></div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert-success"><%= success %></div>
+    <% } %>
+
+    <div class="alert-info" style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); color: #059669;">
+      <strong>Verification Code:</strong> <span style="font-size: 1.2rem; letter-spacing: 2px;">123456</span>
+    </div>
+
+    <form action="/verify-email" method="POST" id="otp-form">
+      <input type="hidden" name="otp" id="otp-hidden">
+      <div class="otp-inputs">
+        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]">
+      </div>
+      <button type="submit" class="btn-primary">✅ Verify Account</button>
+    </form>
+
+    <form action="/resend-otp" method="POST" style="margin-top: 8px;">
+      <button type="submit" class="btn-secondary" style="font-size: 0.875rem;">📤 Resend Code</button>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

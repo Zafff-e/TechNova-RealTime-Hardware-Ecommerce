@@ -1,0 +1,127 @@
+<%- include('partials/header', { pageTitle: product.name }) %>
+
+<div class="page-container">
+  <div style="margin-bottom: 16px;">
+    <a href="/shop" style="color: var(--text-muted); font-size: 0.875rem;">← Back to Shop</a>
+  </div>
+
+  <div class="product-detail-layout">
+    <!-- Product Image -->
+    <div>
+      <div class="product-detail-img">
+        <img src="<%= product.imagePath %>" alt="<%= product.name %>" id="main-product-img">
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div>
+      <div class="product-category" style="font-size: 0.85rem; margin-bottom: 8px;">
+        <%= product.category %> <% if(product.brand){ %>&bull; <%= product.brand %><% } %>
+      </div>
+
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 12px; line-height: 1.2;">
+        <%= product.name %>
+      </h1>
+
+      <div class="product-rating" style="margin-bottom: 16px;">
+        <span class="stars" style="font-size: 1.1rem;"><% for(let s=0;s<5;s++){if(s<Math.floor(product.rating || 0)){%>★<%}else{%>☆<%}}%></span>
+        <span style="font-size: 0.9rem;"><%= (product.rating || 0).toFixed(1) %> (<%= product.reviewCount || 0 %> reviews)</span>
+        <% if(product.salesCount > 0) { %><span style="color: var(--green); font-size: 0.85rem; margin-left: 8px;">· <%= product.salesCount %> sold</span><% } %>
+      </div>
+
+      <!-- Price -->
+      <div style="margin-bottom: 20px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent-light);">
+            BDT <%= product.price.toLocaleString('en-BD') %>
+          </span>
+          <% if (product.originalPrice && product.originalPrice > product.price) { %>
+            <span style="color: var(--text-muted); text-decoration: line-through; font-size: 1.1rem;">BDT <%= product.originalPrice.toLocaleString('en-BD') %></span>
+            <span class="product-discount" style="font-size: 0.9rem; padding: 4px 10px;">
+              Save <%= Math.round((1 - product.price/product.originalPrice)*100) %>%
+            </span>
+          <% } %>
+        </div>
+        <% if (product.isPreOrder && product.preOrderETA) { %>
+          <div style="color: var(--amber); font-size: 0.875rem; margin-top: 6px;">📅 Expected: <%= product.preOrderETA %></div>
+        <% } %>
+      </div>
+
+      <!-- Description -->
+      <% if (product.description) { %>
+        <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; font-size: 0.95rem;"><%= product.description %></p>
+      <% } %>
+
+      <!-- Stock Status -->
+      <div style="margin-bottom: 20px;">
+        <% if (product.isPreOrder) { %>
+          <span style="background: rgba(139,92,246,0.15); color: #c084fc; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(139,92,246,0.3);">🔮 Pre-Order Available</span>
+        <% } else if (product.stock > 0) { %>
+          <span style="background: rgba(16,185,129,0.15); color: var(--green); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(16,185,129,0.3);">✅ In Stock (<%= product.stock %> units)</span>
+        <% } else { %>
+          <span style="background: rgba(239,68,68,0.15); color: #f87171; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(239,68,68,0.3);">❌ Out of Stock</span>
+        <% } %>
+      </div>
+
+      <!-- Add to Cart / Pre-Order -->
+      <% if (product.isPreOrder || product.stock > 0) { %>
+        <form action="/cart/add" method="POST" class="ajax-cart-form" style="margin-bottom: 12px;">
+          <input type="hidden" name="productId" value="<%= product._id %>">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="btn-add-cart <%= product.isPreOrder ? 'btn-preorder' : '' %>" style="padding: 14px; font-size: 1rem;">
+            <%= product.isPreOrder ? '🔮 Pre-Order Now' : '🛒 Add to Cart' %>
+          </button>
+        </form>
+      <% } else { %>
+        <button class="btn-add-cart btn-out-stock" disabled style="padding: 14px; font-size: 1rem;">Out of Stock</button>
+      <% } %>
+
+      <!-- Tags -->
+      <% if (product.tags && product.tags.length > 0) { %>
+        <div style="margin-top: 16px; display: flex; gap: 6px; flex-wrap: wrap;">
+          <% product.tags.forEach(tag => { %>
+            <span style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">#<%= tag %></span>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- COD Info -->
+      <div style="margin-top: 24px; background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.15); border-radius: 12px; padding: 16px;">
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">🚚 Cash on Delivery</span>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">📦 Ships in 1-2 days</span>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">📱 QR on delivery</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  <% if (related && related.length > 0) { %>
+  <section style="margin-top: 60px;">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">🔗</span> Related Products</h2>
+    </div>
+    <div class="products-grid">
+      <% related.forEach(p => { %>
+        <div class="product-card">
+          <div class="product-card-img">
+            <img src="<%= p.imagePath %>" alt="<%= p.name %>" loading="lazy">
+          </div>
+          <div class="product-card-body">
+            <div class="product-category"><%= p.category %></div>
+            <a href="/product/<%= p._id %>" style="text-decoration:none;"><div class="product-name"><%= p.name %></div></a>
+            <div class="product-price-row"><div class="product-price">BDT <%= p.price.toLocaleString('en-BD') %></div></div>
+            <form action="/cart/add" method="POST" class="ajax-cart-form">
+              <input type="hidden" name="productId" value="<%= p._id %>">
+              <button type="submit" class="btn-add-cart">🛒 Add to Cart</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

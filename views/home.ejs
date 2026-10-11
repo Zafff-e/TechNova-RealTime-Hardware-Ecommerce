@@ -1,0 +1,188 @@
+<%- include('partials/header', { pageTitle: 'Home', activePage: 'home' }) %>
+
+<div class="main-content" id="main-content">
+  
+  <!-- left column sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <!-- vertical slideshow -->
+    <div class="slideshow-container" id="slideshow-container">
+      <div class="slideshow-header">
+        <span class="slideshow-title">🎮 Featured Gear</span>
+        <span class="slideshow-badge">Live</span>
+      </div>
+      <!-- slide 1: playstation 5 -->
+      <div class="slide active">
+        <img src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=600&q=80&auto=format&fit=crop" alt="PlayStation 5" loading="eager">
+        <div class="slide-caption">
+          <h3>PlayStation 5</h3>
+          <p>Next-gen gaming, 4K @ 120fps — Pre-Order Now</p>
+        </div>
+      </div>
+      <!-- slide 2: dji drone -->
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&q=80&auto=format&fit=crop" alt="DJI Drone" loading="lazy">
+        <div class="slide-caption">
+          <h3>DJI Pro Drones</h3>
+          <p>4K cinematic footage from the sky, from BDT 65,000</p>
+        </div>
+      </div>
+      <!-- slide 3: ipad with smart cover -->
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=80&auto=format&fit=crop" alt="iPad with Smart Cover" loading="lazy">
+        <div class="slide-caption">
+          <h3>Apple iPad Pro</h3>
+          <p>M4 chip, Ultra Retina display + Premium Covers</p>
+        </div>
+      </div>
+      <!-- slide 4: rtx gpu -->
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&q=80&auto=format&fit=crop" alt="RTX Graphics Card" loading="lazy">
+        <div class="slide-caption">
+          <h3>Next-Gen GPUs</h3>
+          <p>RTX 4080 Super &amp; RX 9070 XT now in stock</p>
+        </div>
+      </div>
+      <div class="slideshow-dots" id="slideshow-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- sidebar quick links -->
+    <div class="sidebar-links" id="sidebar-links">
+      <h3>⚡ Quick Access</h3>
+      <a href="/shop?sort=popular" class="sidebar-link-item"><span class="sidebar-link-icon">🏆</span><span>Best Sellers</span></a>
+      <a href="/shop?sort=newest" class="sidebar-link-item"><span class="sidebar-link-icon">🆕</span><span>New Arrivals</span></a>
+      <a href="/shop?preorder=true" class="sidebar-link-item"><span class="sidebar-link-icon">🔮</span><span>Pre-Orders</span></a>
+      <a href="/my-orders" class="sidebar-link-item"><span class="sidebar-link-icon">📦</span><span>Track My Order</span></a>
+      <a href="/contact" class="sidebar-link-item"><span class="sidebar-link-icon">🛠️</span><span>Customer Support</span></a>
+    </div>
+  </aside>
+
+
+  <!-- right column main panel -->
+  <div class="main-panel" id="main-panel">
+
+    <!-- offers section -->
+    <section id="offers-section">
+      <h2 class="section-title">
+        <span class="icon">🔥</span> Active Special Promotions
+      </h2>
+      <br>
+      <div class="offers-grid">
+        <% offers.forEach(offer => { %>
+          <div class="offer-card">
+            <span class="offer-badge"><%= offer.badge %></span>
+            <h3><%= offer.title %></h3>
+            <p><%= offer.description %></p>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- popular items -->
+    <section id="popular-items-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="icon">🔥</span> Popular Right Now
+        </h2>
+        <a href="/shop?sort=popular" class="section-see-all" id="see-all-popular">See all →</a>
+      </div>
+      <div class="products-grid">
+        <% popularProducts.forEach((product, i) => { %>
+          <div class="product-card">
+            <div class="product-card-img">
+              <a href="/product/<%= product._id %>" style="display: block;">
+                <img src="<%= product.imagePath %>" alt="<%= product.name %>" loading="lazy">
+              </a>
+              <% if (i < 3) { %><span class="product-badge badge-hot">#<%= i+1 %> Best Seller</span><% } %>
+              <% if (product.isPreOrder) { %><span class="product-badge badge-preorder">Pre-Order</span><% } %>
+            </div>
+            <div class="product-card-body">
+              <div class="product-category"><%= product.category %></div>
+              <a href="/product/<%= product._id %>" style="text-decoration:none;">
+                <div class="product-name"><%= product.name %></div>
+              </a>
+              <div class="product-rating">
+                <span class="stars"><%
+                  for(let s=0;s<5;s++) {
+                    if(s < Math.floor(product.rating)) { %>★<% } else { %>☆<% }
+                  }
+                %></span>
+                <span>(<%= product.reviewCount %>)</span>
+              </div>
+              <div class="product-price-row">
+                <div class="product-price">BDT <%= product.price.toLocaleString('en-BD') %></div>
+                <% if (product.originalPrice && product.originalPrice > product.price) { %>
+                  <div class="product-original-price">BDT <%= product.originalPrice.toLocaleString('en-BD') %></div>
+                  <div class="product-discount">-<%= Math.round((1 - product.price/product.originalPrice)*100) %>%</div>
+                <% } %>
+              </div>
+              <% if (product.stock > 0) { %>
+                <form action="/cart/add" method="POST" class="ajax-cart-form">
+                  <input type="hidden" name="productId" value="<%= product._id %>">
+                  <button type="submit" class="btn-add-cart">🛒 Add to Cart</button>
+                </form>
+              <% } else { %>
+                <button class="btn-add-cart btn-out-stock" disabled>Out of Stock</button>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- realtime order tracking -->
+    <section class="tracking-section" id="tracking-section">
+      <h2 class="section-title">
+        <span class="icon">📦</span> Realtime Order Tracking
+      </h2>
+      <div class="status-tracker" id="status-tracker">
+        <div class="status-step done" id="step-placed">
+          <div class="step-dot">✓</div>
+          <div class="step-content">
+            <div class="step-label">Order Placed</div>
+            <div class="step-time">Jun 15, 2026 — 02:30 PM</div>
+          </div>
+        </div>
+        <div class="status-step done" id="step-payment">
+          <div class="step-dot">✓</div>
+          <div class="step-content">
+            <div class="step-label">Payment Confirmed (COD)</div>
+            <div class="step-time">Jun 15, 2026 — 02:31 PM</div>
+          </div>
+        </div>
+        <div class="status-step done" id="step-packaging">
+          <div class="step-dot">✓</div>
+          <div class="step-content">
+            <div class="step-label">Packaging Complete</div>
+            <div class="step-time">Jun 15, 2026 — 06:45 PM</div>
+          </div>
+        </div>
+        <div class="status-step active" id="step-delivery">
+          <div class="step-dot">🚚</div>
+          <div class="step-content">
+            <div class="step-label">Out for Delivery</div>
+            <div class="step-time">Jun 16, 2026 — arriving today by 6 PM</div>
+          </div>
+        </div>
+        <div class="status-step" id="step-delivered">
+          <div class="step-dot">📬</div>
+          <div class="step-content">
+            <div class="step-label">Delivered</div>
+            <div class="step-time">Pending</div>
+          </div>
+        </div>
+      </div>
+      <div class="tracking-id-box" id="tracking-id-box">
+        <span class="tracking-id-label">Tracking ID</span>
+        <span class="tracking-id-value">TN-2026-0615-7842</span>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<%- include('partials/footer') %>

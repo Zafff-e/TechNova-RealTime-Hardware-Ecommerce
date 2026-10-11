@@ -1,0 +1,93 @@
+[
+  {
+    "_id": "USR-ADMIN",
+    "name": "TechNova Admin",
+    "email": "admin@technova.com",
+    "password": "$2a$10$4XZPrty7NMIRPR6.LxTPiOYE0iT7GiYPoZq7vdrGis4nKK96bLJXe",
+    "role": "admin",
+    "isVerified": true,
+    "phone": "",
+    "address": ""
+  },
+  {
+    "_id": "USR-CUST",
+    "name": "Test Customer",
+    "email": "customer@technova.com",
+    "password": "$2a$10$hNyqxokzfirl/HGNGAUSkeZ9LAXfoZl4owi2h5sBtCwUX7qaFTzFy",
+    "role": "customer",
+    "isVerified": true,
+    "phone": "01711223344",
+    "address": "House 1, Road 2, Dhaka"
+  },
+  {
+    "_id": "USR-1781174888340",
+    "name": "admin",
+    "email": "admin@zafir.com",
+    "password": "$2a$12$LbXtdl5Sha0bEPfy02AVyeUJxXI05uRwgpAO1F.Xj44OznrRYCAly",
+    "phone": "",
+    "address": "",
+    "role": "admin",
+    "isVerified": true,
+    "otp": null,
+    "otpExpiry": null,
+    "createdAt": "2026-06-11T10:48:08.340Z"
+  },
+  {
+    "_id": "USR-1781179572436",
+    "name": "admin",
+    "email": "admin@tech.com",
+    "password": "$2a$12$cDRVZj2joV/kijYssNxFfOh.MFrm9fWJaJJsu3RXrGVKDPbxxYl76",
+    "phone": "",
+    "address": "",
+    "role": "admin",
+    "isVerified": false,
+    "otp": "249438",
+    "otpExpiry": "2026-06-11T12:16:12.436Z",
+    "createdAt": "2026-06-11T12:06:12.436Z"
+  },
+  {
+    "_id": "USR-1781179621187",
+    "name": "zafir hasan",
+    "email": "ahmzafirhasan@gmail.com",
+    "password": "$2a$12$1veZ0OUAoZ22emgKgIt5rO8lMLKwct0yqrX51btM/UWDApYhHw27a",
+    "phone": "",
+    "address": "Plot 1 Rd 9",
+    "role": "customer",
+    "isVerified": false,
+    "otp": "187915",
+    "otpExpiry": "2026-06-20T08:41:47.627Z",
+    "createdAt": "2026-06-11T12:07:01.187Z"
+  },
+  {
+    "_id": "USR-1781808847872",
+    "name": "zafir",
+    "email": "zafir@gmail.com",
+    "password": "$2a$12$zPAU7hkPLLx2Dxi/DyD5zu5Qb0Bss0KezfRHtxw.ldY0OT9e4Kw56",
+    "phone": "",
+    "address": "Chandrima model town, road no-09,\r\nhouse no-09, block-C, flat-1C",
+    "role": "customer",
+    "isVerified": true,
+    "otp": null,
+    "otpExpiry": null,
+    "createdAt": "2026-06-18T18:54:07.872Z"
+  },
+  {
+    "_id": "ADM-1781990924236",
+    "name": "admin",
+    "email": "admin@admin.com",
+    "password": "$2a$12$fpaBhQmLdZMt4EvMf77mvuwoVFTOwGifAvqOMg2tYoCmJU34T3ucm",
+    "role": "admin",
+    "isVerified": true,
+    "createdAt": "2026-06-20T21:28:44.236Z"
+  },
+  {
+    "_id": "ADM-1781992904205",
+    "username": "newadmin",
+    "name": "newadmin",
+    "email": "newadmin@admin.com",
+    "password": "$2a$12$BLxRIJHa5zdSK/ePcwsVEON0kTFp8Gd3Dlwq0RMJPCwbHZtdmB32C",
+    "role": "admin",
+    "isVerified": true,
+    "createdAt": "2026-06-20T22:01:44.206Z"
+  }
+]

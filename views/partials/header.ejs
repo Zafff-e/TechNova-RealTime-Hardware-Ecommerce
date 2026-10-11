@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TechNova — Your ultimate tech hardware destination. Shop CPUs, GPUs, RAM, SSDs, monitors and more.">
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' | TechNova' : 'TechNova — Tech Hardware Store' %></title>
+  <link href="/css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark-theme');
+    }
+  </script>
+</head>
+<body data-user-id="<%= user ? user.id : '' %>">
+
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+  <a href="/" class="header-brand" id="header-brand">
+    <span class="brand-icon">⚡</span>
+    <span class="brand-name">Tech<span>Nova</span></span>
+  </a>
+
+  <div class="header-search" id="header-search">
+    <form action="/shop" method="GET" id="search-form" style="display:flex; width:100%; position:relative;">
+      <input type="text" name="search" id="search-input" placeholder="Search CPUs, GPUs, monitors, keyboards..." style="width:100%; padding:10px 16px; padding-right:44px; background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius); color:var(--text-primary); outline:none;" autocomplete="off">
+      <button type="submit" aria-label="Search" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:var(--accent); border:none; border-radius:6px; color:white; width:34px; height:34px; cursor:pointer;">🔍</button>
+      <div id="search-suggestions" class="search-suggestions" style="display: none;"></div>
+    </form>
+  </div>
+
+  <div class="header-actions" id="header-actions">
+    <!-- Live viewer count -->
+    <div class="viewer-pill" id="viewer-pill" style="display:none;">
+      <span class="viewer-dot"></span>
+      <span id="viewer-count">0</span>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" title="Toggle Dark Mode" style="background:transparent; border:1px solid var(--border); color:var(--text-primary); padding:8px 14px; border-radius:var(--radius); cursor:pointer;">
+      🌙
+    </button>
+
+    <% if (user) { %>
+      <div class="user-menu" style="background:transparent; border-color:var(--border);">
+        <div class="avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+        <span style="color:var(--text-primary); font-size:0.85rem;"><%= user.name.split(' ')[0] %></span>
+      </div>
+      <a href="/my-orders">
+        <span>📦</span>
+        <span class="action-text">Orders</span>
+      </a>
+      <a href="/logout" style="color:var(--red);">
+        <span>🚪</span>
+      </a>
+    <% } else { %>
+      <a href="/login" style="padding:6px 13px; border:1px solid var(--border); border-radius:6px; color:var(--text-primary); font-size:0.82rem; font-weight:600; text-decoration:none; transition:var(--transition);">
+        👤 Sign In
+      </a>
+      <a href="/register" style="padding:6px 13px; background:var(--accent); border:none; border-radius:6px; color:white; font-size:0.82rem; font-weight:600; text-decoration:none; transition:var(--transition);">
+        ✨ Sign Up
+      </a>
+    <% } %>
+
+    <a href="/cart" id="cart-btn">
+      <span>🛒</span>
+      <span class="action-text">Cart</span>
+    </a>
+
+    <% if (user && user.role === 'admin') { %>
+      <a href="/admin" style="color:#f59e0b;">
+        <span>⚙</span>
+        <span class="action-text">Admin</span>
+      </a>
+    <% } %>
+  </div>
+</header>
+
+<nav class="site-nav" id="site-nav">
+  <a href="/" class="nav-link <%= typeof activePage !== 'undefined' && activePage === 'home' ? 'active' : '' %>">🏠 Home</a>
+  <a href="/shop" class="nav-link <%= typeof activePage !== 'undefined' && activePage === 'shop' ? 'active' : '' %>">🛍️ Shop</a>
+  <a href="/shop?category=CPU" class="nav-link active">🧠 CPUs</a>
+  <a href="/shop?category=GPU" class="nav-link active">🎮 GPUs</a>
+  <a href="/shop?category=Laptop" class="nav-link active">💻 Laptops</a>
+  <a href="/shop?category=Monitor" class="nav-link active">🖥️ Monitors</a>
+  <a href="/shop?category=Keyboard" class="nav-link active">⌨️ Keyboards</a>
+  <a href="/shop?category=Storage" class="nav-link active">💾 Storage</a>
+  <a href="/shop?sort=popular" class="nav-link active">🔥 Popular</a>
+  <a href="/shop?sort=price-asc" class="nav-link active">💰 Deals</a>
+</nav>
+
+<main>

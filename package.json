@@ -1,0 +1,36 @@
+{
+  "name": "technova",
+  "version": "1.0.0",
+  "description": "TechNova - Real-time Tech Hardware E-Commerce Platform",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node utils/seed.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "tech",
+    "hardware",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongoose": "^9.7.2",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^9.0.1",
+    "qrcode": "^1.5.4",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

@@ -1,0 +1,55 @@
+<%- include('partials/header', { pageTitle: 'Order Confirmed' }) %>
+
+<div style="display: flex; align-items: center; justify-content: center; min-height: 75vh; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-primary); padding: 20px;">
+    <div style="background: var(--bg-card); padding: 45px 40px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04); max-width: 480px; width: 100%; border: 1px solid var(--border); text-align: center;">
+        
+        <div style="margin: 0 auto 24px auto; display: flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: rgba(56, 161, 105, 0.1); border-radius: 50%; border: 3px solid rgba(56, 161, 105, 0.2);">
+            <span style="font-size: 2.5rem; color: #38a169;">✓</span>
+        </div>
+
+        <h2 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.5px;">Transaction Complete</h2>
+        <p style="color: var(--text-secondary); margin: 0 0 32px 0; font-size: 0.95rem; line-height: 1.5;">
+            Thank you for your order, <strong><%= order.customerName %></strong>.<br />
+            Your order has been saved successfully.
+        </p>
+
+        <hr style="border: 0; border-top: 1px dashed var(--border); margin-bottom: 24px;" />
+
+        <% if (order && order.orderId) { %>
+            <div style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; border: 1px solid var(--border); margin-bottom: 32px; text-align: center;">
+                <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: var(--text-secondary); font-weight: bold;">Order Reference: <span style="font-family: monospace; color: var(--accent-light);"><%= order.orderId %></span></p>
+                <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: var(--text-secondary); font-weight: bold;">Total Amount: <span style="font-family: monospace; color: var(--accent-light);">BDT <%= order.totalAmount.toLocaleString('en-BD') %></span></p>
+                <% if (typeof qrCodeDataUrl !== 'undefined' && qrCodeDataUrl) { %>
+                    <img src="<%= qrCodeDataUrl %>" alt="QR Code" style="width: 150px; height: 150px; border-radius: 8px; border: 1px solid var(--border); padding: 5px; background: white; margin: 10px auto;">
+                    <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Scan QR for receiving confirmation</p>
+                <% } %>
+            </div>
+        <% } %>
+
+        <div style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; border: 1px solid var(--border); margin-bottom: 32px;">
+            <p style="margin: 0; font-size: 0.95rem; color: var(--text-primary); font-weight: 600; line-height: 1.4;">
+                📦 Track your order status from your dashboard.<br>
+                🚚 Please prepare the exact Cash on Delivery amount.
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 16px; justify-content: center;">
+            
+            <a href="/shop" style="flex: 1; background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%); color: #ffffff; text-decoration: none; padding: 14px 20px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(49, 130, 206, 0.3); transition: transform 0.15s ease, opacity 0.15s ease; text-align: center;" 
+               onmouseover="this.style.opacity='0.95'" 
+               onmouseout="this.style.opacity='1'">
+                Continue Shopping
+            </a>
+            
+            <a href="/my-orders" style="flex: 1; background: transparent; color: var(--text-secondary); text-decoration: none; padding: 14px 20px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: 1px solid var(--border); transition: background 0.15s ease; text-align: center;" 
+               onmouseover="this.style.background='var(--bg-secondary)'" 
+               onmouseout="this.style.background='transparent'">
+                Track Order
+            </a>
+            
+        </div>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,107 @@
+<%- include('partials/header', { pageTitle: 'Shop', activePage: 'shop' }) %>
+
+<div class="page-container">
+  <div style="margin-bottom: 28px;">
+    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; color: white; margin-bottom: 4px;">Tech Hardware Catalog</h1>
+    <p style="color: var(--text-muted);"><%= total %> products found</p>
+  </div>
+
+  <!-- Search + Sort Bar -->
+  <form action="/shop" method="GET" style="margin-bottom: 24px;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <input type="hidden" name="category" value="<%= currentCategory %>">
+      <input type="text" name="search" value="<%= search %>" placeholder="Search products..." class="form-input" style="flex: 1; min-width: 200px; padding: 10px 14px;">
+      <select name="sort" class="form-input form-select" style="width: auto; padding: 10px 14px;">
+        <option value="" <%= sort==='' ? 'selected' : '' %>>Sort: Latest</option>
+        <option value="popular"    <%= sort==='popular'    ? 'selected' : '' %>>Most Popular</option>
+        <option value="price-asc"  <%= sort==='price-asc'  ? 'selected' : '' %>>Price: Low → High</option>
+        <option value="price-desc" <%= sort==='price-desc' ? 'selected' : '' %>>Price: High → Low</option>
+        <option value="rating"     <%= sort==='rating'     ? 'selected' : '' %>>Top Rated</option>
+      </select>
+      <button type="submit" class="btn-primary" style="width: auto; padding: 10px 24px; margin: 0;">Search</button>
+    </div>
+  </form>
+
+  <!-- Category Tabs -->
+  <div class="category-tabs" style="margin-bottom: 28px;">
+    <% categories.forEach(cat => { %>
+      <a href="/shop?category=<%= cat %>&sort=<%= sort %>" class="cat-tab <%= currentCategory === cat ? 'active' : '' %>"><%= cat %></a>
+    <% }) %>
+  </div>
+
+  <!-- Products Grid -->
+  <% if (products.length === 0) { %>
+    <div style="text-align: center; padding: 80px 20px; color: var(--text-muted);">
+      <div style="font-size: 4rem; margin-bottom: 16px;">🔍</div>
+      <h3 style="color: var(--text-secondary);">No products found</h3>
+      <p>Try a different search term or category.</p>
+      <a href="/shop" class="btn-primary" style="display: inline-block; margin-top: 20px; width: auto; padding: 12px 32px;">View All Products</a>
+    </div>
+  <% } else { %>
+    <div class="products-grid">
+      <% products.forEach(product => { %>
+        <div class="product-card">
+          <div class="product-card-img">
+            <img src="<%= product.imagePath %>" alt="<%= product.name %>" loading="lazy">
+            <% if (product.isPreOrder) { %><span class="product-badge badge-preorder">Pre-Order</span>
+            <% } else if (product.isFeatured) { %><span class="product-badge badge-hot">Featured</span>
+            <% } else if (product.originalPrice && product.originalPrice > product.price) { %><span class="product-badge badge-sale">Sale</span>
+            <% } %>
+            <% if (product.stock === 0 && !product.isPreOrder) { %>
+              <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
+                <span style="background: var(--red); color: white; padding: 6px 14px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;">Out of Stock</span>
+              </div>
+            <% } %>
+          </div>
+          <div class="product-card-body">
+            <div class="product-category"><%= product.category %><% if(product.brand) { %> &bull; <%= product.brand %><% } %></div>
+            <a href="/product/<%= product._id %>" style="text-decoration:none;">
+              <div class="product-name"><%= product.name %></div>
+            </a>
+            <div class="product-rating">
+              <span class="stars"><% for(let s=0;s<5;s++){if(s<Math.floor(product.rating)){%>★<%}else{%>☆<%}}%></span>
+              <span>(<%= product.reviewCount %>)</span>
+              <% if (product.salesCount > 50) { %><span style="color: var(--green); margin-left: 4px;">· <%= product.salesCount %> sold</span><% } %>
+            </div>
+            <div class="product-price-row">
+              <div class="product-price">BDT <%= product.price.toLocaleString('en-BD') %></div>
+              <% if (product.originalPrice && product.originalPrice > product.price) { %>
+                <div class="product-original-price">BDT <%= product.originalPrice.toLocaleString('en-BD') %></div>
+                <div class="product-discount">-<%= Math.round((1 - product.price/product.originalPrice)*100) %>%</div>
+              <% } %>
+            </div>
+            <% if (product.isPreOrder) { %>
+              <form action="/cart/add" method="POST" class="ajax-cart-form">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <button type="submit" class="btn-add-cart btn-preorder">🔮 Pre-Order<% if(product.preOrderETA) { %> · <%= product.preOrderETA %><% } %></button>
+              </form>
+            <% } else if (product.stock > 0) { %>
+              <form action="/cart/add" method="POST" class="ajax-cart-form">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <button type="submit" class="btn-add-cart">🛒 Add to Cart</button>
+              </form>
+            <% } else { %>
+              <button class="btn-add-cart btn-out-stock" disabled>Out of Stock</button>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+    <div style="display: flex; justify-content: center; gap: 8px; margin-top: 40px;">
+      <% for(let p=1; p<=totalPages; p++) { %>
+        <a href="/shop?category=<%= currentCategory %>&search=<%= search %>&sort=<%= sort %>&page=<%= p %>"
+           style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.875rem; font-weight: 600; text-decoration: none;
+                  background: <%= p===currentPage ? 'var(--accent)' : 'transparent' %>;
+                  color: <%= p===currentPage ? 'white' : 'var(--text-secondary)' %>;">
+          <%= p %>
+        </a>
+      <% } %>
+    </div>
+    <% } %>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

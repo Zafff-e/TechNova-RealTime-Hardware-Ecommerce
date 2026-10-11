@@ -1,0 +1,142 @@
+</main>
+
+<!-- FOOTER -->
+<!-- FOOTER -->
+<footer class="site-footer" id="site-footer">
+  <div class="footer-grid" id="footer-grid">
+    <div class="footer-brand" id="footer-brand">
+      <div class="brand">⚡ TechNova</div>
+      <p>Bangladesh's premier destination for computer hardware, gaming peripherals, and tech accessories. Fast delivery, Cash on Delivery, and verified secure orders nationwide.</p>
+    </div>
+    <div class="footer-col" id="footer-shop">
+      <h4>Shop</h4>
+      <a href="/shop">All Products</a>
+      <a href="/shop?category=CPU">CPUs & Processors</a>
+      <a href="/shop?category=GPU">Graphics Cards</a>
+      <a href="/shop?category=Monitor">Monitors</a>
+      <a href="/shop?category=Storage">Storage & SSDs</a>
+    </div>
+    <div class="footer-col" id="footer-support">
+      <h4>Support</h4>
+      <a href="/my-orders">Track My Order</a>
+      <a href="#">Help Center</a>
+      <a href="#">Returns & Refunds</a>
+      <a href="#">Shipping Info</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-col" id="footer-company">
+      <h4>Account</h4>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+      <a href="/cart">My Cart</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom" id="footer-bottom">
+    © 2026 TechNova. All rights reserved. Built with ❤️ in Bangladesh.
+  </div>
+</footer>
+<footer class="site-footer">
+  <div class="footer-info">
+    <div class="footer-col">
+      <p class="footer-tag">It Scholarship Student</p>
+      <p>Ahm Zafir Hasan<br>ID: 1294926<br>Batch: CS/SCSL-A/70/01<br>Email: ahmzafirhasan@gmail.com<br>Phone:
+        +8801747544273</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-tag">Project Consultant</p>
+      <p>Zahidul Hassan<br>Show &amp; Tell Consulting Ltd<br>Email: jewelmir81@gmail.com<br>Phone:
+        +8801535110014</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 IsDB-BISEW — All rights reserved &nbsp;·&nbsp; Designed by Ahm Zafir Hasan &nbsp;·&nbsp; ID
+    1294926
+    &nbsp;·&nbsp; Batch CS/SCSL-A/70/01
+  </div>
+</footer>
+
+
+<button class="floating-cart-icon" id="floating-cart-icon" title="Open Cart">
+  🛒
+  <span class="floating-cart-badge" id="floating-cart-badge" style="display:none;">0</span>
+</button>
+
+<!-- SLIDE-IN CART PANEL -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <h3>🛒 Your Cart <span class="cart-drawer-count" id="cart-drawer-count"></span></h3>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <button class="cart-drawer-minimize" id="cart-drawer-minimize" title="Minimize Cart">➖</button>
+      <button class="cart-drawer-close" id="cart-drawer-close">&times;</button>
+    </div>
+  </div>
+  <div class="cart-drawer-items" id="cart-drawer-items">
+    <!-- Items loaded via AJAX -->
+    <div class="cart-drawer-empty" id="cart-drawer-empty">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">🛒</div>
+      <p>Your cart is empty</p>
+      <a href="/shop" class="cart-drawer-shop-link">Browse Products →</a>
+    </div>
+  </div>
+  <div class="cart-drawer-footer" id="cart-drawer-footer" style="display:none;">
+    <div class="cart-drawer-subtotal">
+      <span>Subtotal</span>
+      <span id="cart-drawer-subtotal-val">BDT 0</span>
+    </div>
+    <a href="/cart" class="cart-drawer-view-btn">View Full Cart</a>
+    <a href="/checkout" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Proceed to Checkout →</a>
+    <div id="cart-drawer-auth-btns" style="display: none; gap: 10px; margin-top: 10px;">
+      <a href="/login" class="cart-drawer-checkout-btn" style="flex: 1; text-align: center; background: transparent; border: 1px solid var(--border); color: var(--text-primary);">Sign In</a>
+      <a href="/register" class="cart-drawer-checkout-btn" style="flex: 1; text-align: center;">New User</a>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE CHAT WIDGET -->
+<button class="chat-fab" id="chat-fab" title="Live Chat">
+  💬
+  <span class="unread" id="chat-unread">0</span>
+</button>
+
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div class="chat-title">
+      <span class="online-dot"></span>
+      Live Support Chat
+    </div>
+    <button class="chat-close" id="chat-close">&times;</button>
+  </div>
+  <div class="chat-identity">
+    <input type="text" id="chat-name-input" placeholder="Your nickname..." class="form-input" style="padding: 6px 10px; font-size: 0.8rem;">
+    <button id="chat-set-btn" class="chat-send" style="font-size: 0.8rem;">Set</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; margin: auto; padding: 20px;">
+      Welcome to TechNova Live Chat! 👋
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chat-msg-input" placeholder="Type a message..." disabled>
+    <button id="chat-send-btn" class="chat-send">Send</button>
+  </div>
+</div>
+
+<!-- Local jQuery Library -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/main.js"></script>
+
+<!-- Initialize cart badge on load -->
+<script>
+  (function() {
+    const count = <%= JSON.stringify(cartCount || 0) %>;
+    if (count > 0) {
+      const badge = document.getElementById('floating-cart-badge');
+      if (badge) { badge.textContent = count; badge.style.display = 'flex'; }
+    }
+  })();
+</script>
+
+</body>
+</html>

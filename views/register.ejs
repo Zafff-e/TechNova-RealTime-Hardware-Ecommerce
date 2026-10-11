@@ -1,0 +1,81 @@
+<%- include('partials/header', { pageTitle: 'Create Account' }) %>
+
+<div style="max-width: 520px; margin: 30px auto; padding: 20px;">
+
+    <!-- CUSTOMER REGISTRATION -->
+    <div style="background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05); border: 2px solid #c6f6d5; margin-bottom: 20px;">
+
+        <div style="text-align: center; margin-bottom: 28px;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🛍️</div>
+            <div style="display: inline-block; background: #f0fff4; color: #276749; border: 1px solid #c6f6d5; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+                Register as Customer
+            </div>
+            <h2 style="margin: 0; color: #1a202c; font-size: 1.5rem; font-weight: 700;">Create Your Account</h2>
+            <p style="color: #718096; margin-top: 6px; font-size: 0.9rem;">Shop, track orders and manage your cart.</p>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div style="background: #fff5f5; border: 1px solid #fed7d7; color: #c53030; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; text-align: center; font-weight: 500;">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if (typeof success !== 'undefined' && success) { %>
+            <div style="background: #f0fff4; border: 1px solid #c6f6d5; color: #2f855a; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; text-align: center; font-weight: 500;">
+                <%= success %>
+            </div>
+        <% } %>
+
+        <form action="/register" method="POST">
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #4a5568; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Full Name</label>
+                <input type="text" name="name" placeholder="Zafir Hasan" required
+                    style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box; color: #1a202c; background: #fff;"
+                    onfocus="this.style.borderColor='#48bb78'" onblur="this.style.borderColor='#cbd5e0'">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #4a5568; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Email Address</label>
+                <input type="email" name="email" placeholder="you@example.com" required
+                    style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box; color: #1a202c; background: #fff;"
+                    onfocus="this.style.borderColor='#48bb78'" onblur="this.style.borderColor='#cbd5e0'" autocomplete="email">
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #4a5568; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Password</label>
+                <input type="password" name="password" placeholder="Min 6 characters" required minlength="6"
+                    style="width: 100%; padding: 12px 14px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box; color: #1a202c; background: #fff;"
+                    onfocus="this.style.borderColor='#48bb78'" onblur="this.style.borderColor='#cbd5e0'" autocomplete="new-password">
+            </div>
+
+            <button type="submit" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 700; font-size: 1rem; width: 100%; cursor: pointer; box-shadow: 0 4px 12px rgba(56,161,105,0.3);">
+                ✅ Create Customer Account
+            </button>
+        </form>
+
+        <div style="text-align: center; font-size: 0.9rem; margin-top: 16px; color: #718096;">
+            Already have an account?
+            <a href="/login" style="color: #38a169; text-decoration: none; font-weight: 600; margin-left: 4px;">Sign in →</a>
+        </div>
+    </div>
+
+    <!-- ADMIN REGISTRATION -->
+    <div style="background: #fffaf0; padding: 32px 40px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 2px solid #f6ad55;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 2.4rem; margin-bottom: 8px;">⚙️</div>
+            <div style="display: inline-block; background: #fefce8; color: #744210; border: 1px solid #f6ad55; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+                Register as Admin
+            </div>
+            <h3 style="margin: 0; color: #744210; font-size: 1.2rem; font-weight: 700;">Admin Portal Access</h3>
+            <p style="color: #975a16; margin-top: 4px; font-size: 0.85rem;">Manage products, orders & store settings.</p>
+        </div>
+
+
+
+        <a href="/admin-register" style="display: block; text-align: center; background: linear-gradient(135deg, #dd6b20 0%, #c05621 100%); color: white; border: none; padding: 13px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 12px rgba(221,107,32,0.25);">
+            ⚙️ Register as Admin →
+        </a>
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>

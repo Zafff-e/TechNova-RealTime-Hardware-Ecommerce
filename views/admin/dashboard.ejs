@@ -1,0 +1,110 @@
+<%- include('../partials/header', { pageTitle: 'Admin Dashboard' }) %>
+
+<div class="admin-layout">
+  
+  <aside class="admin-sidebar">
+    <div class="admin-nav-title">Management</div>
+    <a href="/admin" class="admin-nav-link active">📊 Dashboard</a>
+    <a href="/admin/products" class="admin-nav-link">📦 Products</a>
+    <a href="/admin/orders" class="admin-nav-link">🛒 Orders</a>
+  </aside>
+
+  <div class="admin-main">
+    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; color: white; margin-bottom: 28px;">Admin Dashboard</h1>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value" style="color: var(--green);">BDT <%= totalRevenue.toLocaleString('en-BD') %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value" style="color: var(--accent-light);"><%= totalOrders %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Products</div>
+        <div class="stat-value"><%= totalProducts %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Customers</div>
+        <div class="stat-value"><%= totalUsers %></div>
+      </div>
+    </div>
+
+    <!-- Alert for new orders (hidden by default, triggered by WS) -->
+    <div id="admin-new-order-indicator" style="display: none; background: rgba(16,185,129,0.15); border: 1px solid var(--green); padding: 16px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="viewer-dot" style="width: 10px; height: 10px;"></span>
+        <span style="color: white; font-weight: 600;">A new order has arrived!</span>
+      </div>
+      <button onclick="window.location.reload()" class="btn-primary btn-green" style="width: auto; padding: 6px 16px; margin: 0; font-size: 0.85rem;">Refresh Data</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+      
+      <!-- Recent Orders -->
+      <div class="table-container">
+        <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 1.1rem; color: white; margin: 0;">Recent Orders</h3>
+          <a href="/admin/orders" style="font-size: 0.85rem;">View All</a>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentOrders.forEach(o => { %>
+              <tr>
+                <td style="font-family: monospace; color: var(--accent-light);"><%= o.orderId %></td>
+                <td><%= o.customerName %></td>
+                <td style="font-weight: 600;">BDT <%= o.totalAmount.toLocaleString('en-BD') %></td>
+                <td>
+                  <%
+                    let statusClass = 'status-placed';
+                    if(o.status === 'Packaging') statusClass = 'status-packaging';
+                    if(o.status === 'Dispatched') statusClass = 'status-dispatched';
+                    if(o.status === 'Out for Delivery') statusClass = 'status-out';
+                    if(o.status === 'Delivered') statusClass = 'status-delivered';
+                    if(o.status === 'Cancelled') statusClass = 'status-cancelled';
+                  %>
+                  <span class="status-badge <%= statusClass %>"><%= o.status %></span>
+                </td>
+              </tr>
+            <% }) %>
+            <% if (recentOrders.length === 0) { %>
+              <tr><td colspan="4" style="text-align: center; padding: 30px;">No recent orders.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Order Status Summary -->
+      <div class="table-container" style="padding: 20px;">
+        <h3 style="font-size: 1.1rem; color: white; margin-bottom: 16px;">Orders by Status</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <% statusCounts.forEach(s => { 
+              let c = 'status-placed';
+              if(s._id === 'Packaging') c = 'status-packaging';
+              if(s._id === 'Dispatched') c = 'status-dispatched';
+              if(s._id === 'Out for Delivery') c = 'status-out';
+              if(s._id === 'Delivered') c = 'status-delivered';
+              if(s._id === 'Cancelled') c = 'status-cancelled';
+          %>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px;">
+              <span class="status-badge <%= c %>"><%= s._id %></span>
+              <span style="font-weight: 700; color: white;"><%= s.count %></span>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
