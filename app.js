@@ -148,6 +148,17 @@ app.use((req, res) => {
   });
 });
 
+// 500 INTERNAL SERVER ERROR HANDLER
+app.use((err, req, res, next) => {
+  console.error("Internal Server Error:", err.stack || err);
+  res.status(err.status || 500).render("error", {
+    title: "500 - Server Error",
+    message: process.env.NODE_ENV === "production"
+      ? "An unexpected internal server error occurred. Please try again later."
+      : (err.message || "An unexpected error occurred."),
+  });
+});
+
 // START SERVER + INIT MAILER
 server.listen(PORT, async () => {
   console.log(`TechNova running at http://localhost:${PORT}`);

@@ -1,0 +1,23 @@
+﻿<%- include('partials/header', { pageTitle: typeof title !== 'undefined' ? title : 'Error' }) %>
+
+<div style="max-width: 600px; margin: 80px auto; padding: 20px; text-align: center;">
+  <div style="background: var(--bg-card, #ffffff); border: 1px solid var(--border, #e2e8f0); border-radius: var(--radius, 16px); padding: 50px 30px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);">
+    <div style="font-size: 3.5rem; margin-bottom: 16px;">⚠️</div>
+    <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-primary, #1e293b); margin: 0 0 12px;">
+      <%= typeof title !== 'undefined' ? title : 'Something Went Wrong' %>
+    </h1>
+    <p style="color: var(--text-secondary, #64748b); font-size: 1.05rem; line-height: 1.6; margin: 0 0 32px;">
+      <%= typeof message !== 'undefined' ? message : 'An unexpected error occurred while processing your request.' %>
+    </p>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <a href="/" style="display: inline-block; padding: 12px 24px; background: var(--primary, #2563eb); color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.95rem;">
+        Go to Homepage
+      </a>
+      <a href="/shop" style="display: inline-block; padding: 12px 24px; background: transparent; color: var(--text-primary, #1e293b); text-decoration: none; border: 1px solid var(--border, #cbd5e1); border-radius: 8px; font-weight: 600; font-size: 0.95rem;">
+        Browse Catalog
+      </a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
